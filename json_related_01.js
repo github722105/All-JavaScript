@@ -96,3 +96,50 @@ var overSixty = ancestry.filter(function(person) {
 });
 
 console.log(overSixty.map(function(person) {return person.name;}));
+
+// Implementation of reduce functionality.
+
+function reduce(array, combine, start) {
+    var current = start;
+    for (var i = 0; i < array.length; i++) {
+        current = combine(current, array[i]);
+    }
+    return current;
+}
+
+console.log(reduce([1, 2, 3, 4], function(a, b) {
+                                     return a + b;
+                                 }, 0));
+
+// Leaving off the start argument of reduce method of an array.
+console.log([1, 2, 3, 4].reduce(function(a, b) {
+                                     return a + b;
+                                 }));
+
+// Using array's reduce method in finding most ancient ancestor from ANCESTRY_FILE.
+console.log(ancestry.reduce(function(min, cur) {
+    if (cur.born < min.born)
+        return cur;
+    else
+        return min;
+}));
+
+// Find the average age for men and women in the data set.
+function average(array) {
+    function plus(a, b) { return a + b; }
+    return array.reduce(plus) / array.length;
+}
+
+function age(person) { return person.died - person.born; }
+function male(person) { return person.sex == "m"; }
+function female(person) { return person.sex == "f"; }
+
+console.log(average(ancestry.filter(male).map(age)));
+
+console.log(average(ancestry.filter(female).map(age)));
+
+var byName = {};
+ancestry.forEach(function(person) {
+    byName[person.name] = person; } );
+
+console.log(byName["Philibert Haverbeke"]);
