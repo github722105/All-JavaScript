@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Check for non-existent file.
+# Exit status will be 2.
+ls xyzzy.345 > /dev/null 2>&1
+status=`echo $?`
+echo "status is $status"
+
+# Create the file and check again.
+# Status will be 0.
+
+touch xyzzy.345
+ls xyzzy.345 > /dev/null 2>&1
+status=`echo $?`
+echo "status is $status"
+
+# Remove the file.
+rm xyzzy.345
